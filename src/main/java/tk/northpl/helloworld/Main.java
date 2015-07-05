@@ -1,18 +1,18 @@
 package tk.northpl.helloworld;
 
 import org.diorite.Diorite;
+import org.diorite.plugin.DioritePlugin;
 import org.diorite.plugin.Plugin;
-import org.diorite.plugin.PluginMainClass;
 
-@Plugin(name = "NorczykowyPlugin2", version = "0.1-SNAPSHOT", author = "NorthPL93")
-public final class Main extends PluginMainClass
+@Plugin(name = "NorczykowyPlugin", version = "0.1-SNAPSHOT", author = "NorthPL93")
+public final class Main extends DioritePlugin
 {
     private static Main instance;
 
     @Override
     public void onLoad()
     {
-        instance = (Main) this.instance(); // Tutaj mozesz zastapic this.instance() na zwykle this, wtedy nie trzeba castowac
+        instance = this;
         System.out.println("Hello world in onLoad!");
     }
 
@@ -36,7 +36,8 @@ public final class Main extends PluginMainClass
 
     private void registerCommand()
     {
-        Diorite.getCommandMap().registerCommand(Diorite.getServer().createCommand(this, "helloworld").executor((sender, command, label, matchedPattern, args) -> {
+        Diorite.getCommandMap().registerCommand(Diorite.getServer().createCommand(this, "helloworld").alias("hello").executor((sender, command, label, matchedPattern, args) ->
+        {
             sender.sendSimpleColoredMessage("&cHello world!", "&a#OnlyDiorite");
         }).build());
     }
