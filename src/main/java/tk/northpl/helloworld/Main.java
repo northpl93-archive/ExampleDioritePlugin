@@ -2,7 +2,9 @@ package tk.northpl.helloworld;
 
 import org.diorite.Diorite;
 import org.diorite.plugin.DioritePlugin;
+import org.diorite.plugin.FakeDioritePlugin;
 import org.diorite.plugin.Plugin;
+import org.diorite.plugin.PluginException;
 
 @Plugin(name = "NorczykowyPlugin", version = "0.1-SNAPSHOT", author = "NorthPL93")
 public final class Main extends DioritePlugin
@@ -14,6 +16,7 @@ public final class Main extends DioritePlugin
     {
         instance = this;
         System.out.println("Hello world in onLoad!");
+        this.registerFakePlugin();
     }
 
     @Override
@@ -40,5 +43,18 @@ public final class Main extends DioritePlugin
         {
             sender.sendSimpleColoredMessage("&cHello world!", "&a#OnlyDiorite");
         }).build());
+    }
+
+    private void registerFakePlugin()
+    {
+        final FakeDioritePlugin fake = new FakeDioritePlugin(this, "My-sub-plugin", "0.1-SNAPSHOT", "NorthPL93");
+
+        try
+        {
+            Diorite.getPluginManager().injectPlugin(fake);
+        } catch (final PluginException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
